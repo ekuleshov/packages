@@ -5,11 +5,14 @@
 package io.flutter.plugins.camerax;
 
 import android.content.Context;
+import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.camera.camera2.Camera2Config;
 import androidx.camera.core.Camera;
 import androidx.camera.core.CameraInfo;
 import androidx.camera.core.CameraSelector;
+import androidx.camera.core.CameraXConfig;
 import androidx.camera.core.UseCase;
 import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.core.content.ContextCompat;
@@ -75,6 +78,10 @@ public class ProcessCameraProviderHostApiImpl implements ProcessCameraProviderHo
                 new ProcessCameraProviderFlutterApiImpl(binaryMessenger, instanceManager);
             if (!instanceManager.containsInstance(processCameraProvider)) {
               flutterApi.create(processCameraProvider, reply -> {});
+
+              ProcessCameraProvider.configureInstance(
+                  CameraXConfig.Builder.fromConfig(Camera2Config.defaultConfig())
+                      .setMinimumLoggingLevel(Log.ERROR).build());
             }
             result.success(instanceManager.getIdentifierForStrongReference(processCameraProvider));
           } catch (Exception e) {

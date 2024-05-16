@@ -1,6 +1,0 @@
-<resources>
-    <!-- Override the default config provider for CameraX -->
-    <string name="androidx_camera_default_config_provider">
-        io.flutter.plugins.camerax.CameraXConfigProvider
-    </string>
-</resources>
